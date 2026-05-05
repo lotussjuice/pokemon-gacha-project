@@ -52,7 +52,9 @@ const pokemonController = {
             };
 
             const docRef = await db.collection('captures').add(nuevaCaptura);
-            res.status(201).json({ mensaje: "¡Capturado!", id: docRef.id });
+            res.status(201).json({ mensaje: "¡Capturado!", id: docRef.id,
+                    captura: { id: docRef.id, ...nuevaCaptura }
+            });
         } catch (error) {
             res.status(500).json({ error: "Error en la captura" });
         }
@@ -75,7 +77,9 @@ const pokemonController = {
             }
 
             await docRef.set(nuevoPokemon);
-            res.status(201).json({ mensaje: "Pokemon añadido a la Pokedex maestra", id: docId });
+            res.status(201).json({ mensaje: "Pokemon añadido a la Pokedex maestra", id: docId ,
+                    pokemon: { id: docId, ...nuevoPokemon }
+            });
         } catch (error) {
             res.status(500).json({ error: "Error al crear pokemon maestro" });
         }
@@ -111,7 +115,7 @@ const pokemonController = {
             }
 
             await docRef.set(newData);
-            res.status(200).json({ mensaje: "Registro del Pokémon reemplazado totalmente" });
+            res.status(200).json({ mensaje: "Registro del Pokémon reemplazado totalmente" , pokemon: { id, ...newData }});
         } catch (error) {
             res.status(500).json({ error: "Error al reemplazar maestro", details: error.message });
         }
@@ -135,7 +139,7 @@ const pokemonController = {
             newData.createdAt = doc.data().createdAt || new Date();
 
             await docRef.set(newData); // Reemplazo total
-            res.status(200).json({ mensaje: "Informacion del usuario actualizada." });
+            res.status(200).json({ mensaje: "Informacion del usuario actualizada.", usuario: { id, ...newData } });
         } catch (error) {
             res.status(500).json({ error: "Error al actualizar usuario" });
         }
@@ -156,7 +160,7 @@ const pokemonController = {
             if (!doc.exists) return res.status(404).json({ error: "La captura no existe" });
 
             await docRef.update({ nickname: nickname.trim() }); 
-            res.status(200).json({ mensaje: "Apodo actualizado" });
+            res.status(200).json({ mensaje: "Apodo actualizado", captura: { id, nickname: nickname.trim() } });
         } catch (error) {
             res.status(500).json({ error: "Error al editar apodo" });
         }
@@ -187,7 +191,7 @@ const pokemonController = {
             updateData[updatePath] = Number(value);
 
             await docRef.update(updateData);
-            res.status(200).json({ mensaje: `Estadística ${statName} actualizada a ${value}` });
+            res.status(200).json({ mensaje: `Estadística ${statName} actualizada a ${value}`, captura: { id, stats: { ...doc.data().stats, [statName]: Number(value) } } });
         } catch (error) {
             res.status(500).json({ error: "Error al editar stat dinámica", details: error.message });
         }
