@@ -1,0 +1,26 @@
+@font-face {
+  font-family: 'PokemonGB';
+  src: url('./assets/fonts/power-red-and-green.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  image-rendering: pixelated; 
+}
+
+body {
+  font-family: 'PokemonGB', monospace;
+  @apply bg-slate-800 text-slate-100 antialiased;
+}
+
+@layer components {
+  .btn-gameboy {
+    @apply px-6 py-3 bg-gb-red text-white border-b-4 border-r-4 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.5)]
+           active:border-b-0 active:border-r-0 active:translate-y-1 active:translate-x-1 active:shadow-none transition-all;
+  }
+}
