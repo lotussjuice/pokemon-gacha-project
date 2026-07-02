@@ -1,0 +1,31 @@
+meta {
+  name: Buy Item (Comprar item)
+  type: http
+  seq: 2
+}
+
+http {
+  method: post
+  url: {{baseUrl}}/items/buy
+  body: json
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "itemId": "{{itemId}}"
+  }
+}
+
+tests {
+  test("Status 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("Has remaining coins", function() {
+    expect(res.body.remainingCoins).to.be.a("number");
+  });
+}

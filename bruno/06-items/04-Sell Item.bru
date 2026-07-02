@@ -1,0 +1,32 @@
+meta {
+  name: Sell Item (Vender item)
+  type: http
+  seq: 4
+}
+
+http {
+  method: post
+  url: {{baseUrl}}/items/sell
+  body: json
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "userItemId": "{{userItemId}}",
+    "quantity": 1
+  }
+}
+
+tests {
+  test("Status 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("Has earned", function() {
+    expect(res.body.earned).to.be.a("number");
+  });
+}

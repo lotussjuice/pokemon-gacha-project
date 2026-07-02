@@ -1,0 +1,23 @@
+meta {
+  name: Get Team (Obtener equipo)
+  type: http
+  seq: 2
+}
+
+http {
+  method: get
+  url: {{baseUrl}}/captures/team
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+tests {
+  test("Status 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("Is array", function() {
+    expect(res.body).to.be.an("array");
+  });
+}

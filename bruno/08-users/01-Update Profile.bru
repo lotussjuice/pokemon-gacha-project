@@ -1,0 +1,31 @@
+meta {
+  name: Update Profile (Cambiar info de usuario)
+  type: http
+  seq: 1
+}
+
+http {
+  method: put
+  url: {{baseUrl}}/users/profile
+  body: json
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "username": "ash_ketchum"
+  }
+}
+
+tests {
+  test("Status 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("Has message", function() {
+    expect(res.body.message).to.be.a("string");
+  });
+}

@@ -1,0 +1,28 @@
+meta {
+  name: Get All Items (Obtener item)
+  type: http
+  seq: 1
+}
+
+http {
+  method: get
+  url: {{baseUrl}}/items
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+tests {
+  test("Status 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("Is array", function() {
+    expect(res.body).to.be.an("array");
+  });
+  test("Set first item id", function() {
+    if (res.body.length > 0) {
+      bru.setVar("itemId", res.body[0].id);
+    }
+  });
+}

@@ -1,0 +1,23 @@
+meta {
+  name: Delete Pokemon (Eliminar Pokemon del habitat)
+  type: http
+  seq: 4
+}
+
+http {
+  method: delete
+  url: {{baseUrl}}/pokemon/{{pokemonId}}
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+tests {
+  test("Status 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("Has message", function() {
+    expect(res.body.message).to.be.a("string");
+  });
+}

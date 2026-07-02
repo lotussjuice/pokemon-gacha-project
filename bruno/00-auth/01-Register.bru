@@ -1,0 +1,36 @@
+meta {
+  name: 01 - Register
+  type: http
+  seq: 1
+}
+
+http {
+  method: post
+  url: {{baseUrl}}/auth/register
+  body: json
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "username": "ash_ketchum",
+    "email": "ash@pokemon.com",
+    "password": "pikachu123"
+  }
+}
+
+tests {
+  test("Status 200 o 201", function() {
+    expect(res.status).to.be.oneOf([200, 201]);
+  });
+  test("Has token", function() {
+    expect(res.body.token).to.be.a("string");
+    bru.setVar("token", res.body.token);
+  });
+  test("Has user id", function() {
+    bru.setVar("userId", res.body.user.id);
+  });
+}

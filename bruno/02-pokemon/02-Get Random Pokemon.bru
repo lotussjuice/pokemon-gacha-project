@@ -1,0 +1,29 @@
+meta {
+  name: Get Random Pokemon (Obtener Pokemon Aleatorio)
+  type: http
+  seq: 2
+}
+
+http {
+  method: get
+  url: {{baseUrl}}/pokemon/random
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+tests {
+  test("Status 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("Has name", function() {
+    expect(res.body.name).to.be.a("string");
+  });
+  test("Has types", function() {
+    expect(res.body.types).to.be.an("array");
+  });
+  test("Has stats", function() {
+    expect(res.body.stats).to.be.an("object");
+  });
+}

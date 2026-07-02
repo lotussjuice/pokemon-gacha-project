@@ -1,0 +1,26 @@
+meta {
+  name: Get All Pokemon (Lista de Pokemon)
+  type: http
+  seq: 1
+}
+
+http {
+  method: get
+  url: {{baseUrl}}/pokemon?limit=20
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+tests {
+  test("Status 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("Has data array", function() {
+    expect(res.body.data).to.be.an("array");
+  });
+  test("Has total", function() {
+    expect(res.body.total).to.be.a("number");
+  });
+}

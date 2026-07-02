@@ -1,0 +1,45 @@
+meta {
+  name: Start Combat (Nuevo combate)
+  type: http
+  seq: 1
+}
+
+http {
+  method: post
+  url: {{baseUrl}}/combat/start
+  body: json
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "captureId": "{{captureId}}"
+  }
+}
+
+tests {
+  test("Status 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("Has result", function() {
+    expect(["victory", "defeat"]).to.include(res.body.result);
+  });
+  test("Has log", function() {
+    expect(res.body.log).to.be.an("array");
+  });
+  test("Has reward on victory", function() {
+    if (res.body.result === "victory") {
+      expect(res.body.reward).to.be.greaterThan(0);
+    }
+  });
+  test("Has levelUp info", function() {
+    if (res.body.levelUp) {
+      expect(res.body.levelUp.from).to.be.a("number");
+      expect(res.body.levelUp.to).to.be.a("number");
+    }
+  });
+}

@@ -1,0 +1,31 @@
+meta {
+  name: Change Nature (Cambiar naturaleza)
+  type: http
+  seq: 7
+}
+
+http {
+  method: patch
+  url: {{baseUrl}}/captures/{{captureId}}/nature
+  body: json
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "nature": "adamant"
+  }
+}
+
+tests {
+  test("Status 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("Has nature", function() {
+    expect(res.body.nature).to.be.a("string");
+  });
+}

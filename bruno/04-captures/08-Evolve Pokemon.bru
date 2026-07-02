@@ -1,0 +1,23 @@
+meta {
+  name: Evolve Pokemon (Evolucionar Pokemon)
+  type: http
+  seq: 8
+}
+
+http {
+  method: put
+  url: {{baseUrl}}/captures/{{captureId}}/evolve
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+tests {
+  test("Status 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("Has capture", function() {
+    expect(res.body.capture).to.be.an("object");
+  });
+}

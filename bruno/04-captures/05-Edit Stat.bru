@@ -1,0 +1,32 @@
+meta {
+  name: Edit Stat (Editar ataque de Pokemon)
+  type: http
+  seq: 5
+}
+
+http {
+  method: patch
+  url: {{baseUrl}}/captures/{{captureId}}/stat
+  body: json
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "statName": "attack",
+    "value": 120
+  }
+}
+
+tests {
+  test("Status 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("Has stats", function() {
+    expect(res.body.stats).to.be.an("object");
+  });
+}

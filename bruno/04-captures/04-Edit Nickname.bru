@@ -1,0 +1,31 @@
+meta {
+  name: Edit Nickname (Editar nombre a Pokemon)
+  type: http
+  seq: 4
+}
+
+http {
+  method: patch
+  url: {{baseUrl}}/captures/{{captureId}}/nickname
+  body: json
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "nickname": "Pikachu"
+  }
+}
+
+tests {
+  test("Status 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("Has nickname", function() {
+    expect(res.body.nickname).to.be.a("string");
+  });
+}

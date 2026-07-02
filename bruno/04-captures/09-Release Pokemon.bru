@@ -1,0 +1,23 @@
+meta {
+  name: Release Pokemon (Borrar captura)
+  type: http
+  seq: 9
+}
+
+http {
+  method: delete
+  url: {{baseUrl}}/captures/{{captureId}}
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+tests {
+  test("Status 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("Has message", function() {
+    expect(res.body.message).to.be.a("string");
+  });
+}

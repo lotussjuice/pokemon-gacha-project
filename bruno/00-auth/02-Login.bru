@@ -1,0 +1,36 @@
+meta {
+  name: 02 - Login
+  type: http
+  seq: 2
+}
+
+http {
+  method: post
+  url: {{baseUrl}}/auth/login
+  body: json
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "email": "ash@pallet.town",
+    "password": "pikachu123"
+  }
+}
+
+tests {
+  test("Status 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("Has token", function() {
+    expect(res.body.token).to.be.a("string");
+    bru.setVar("token", res.body.token);
+  });
+  test("Has user", function() {
+    expect(res.body.user).to.be.an("object");
+    bru.setVar("userId", res.body.user.id);
+  });
+}

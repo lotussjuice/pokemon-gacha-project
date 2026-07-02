@@ -1,0 +1,38 @@
+meta {
+  name: Gacha Pull Normal (Capturar Pokemon)
+  type: http
+  seq: 2
+}
+
+http {
+  method: post
+  url: {{baseUrl}}/gacha/pull
+  body: json
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "premium": false
+  }
+}
+
+tests {
+  test("Status 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("Has capture", function() {
+    expect(res.body.capture).to.be.an("object");
+    bru.setVar("captureId", res.body.capture.id);
+  });
+  test("Has pokemonId", function() {
+    bru.setVar("pokemonId", res.body.capture.pokemonId);
+  });
+  test("Has remaining coins", function() {
+    expect(res.body.remainingCoins).to.be.a("number");
+  });
+}
